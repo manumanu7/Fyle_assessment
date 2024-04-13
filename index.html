@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <form id="taxCalculatorForm">
+        <label for="income">Enter gross Annual Income <span id="gross">Gross annual income is your total salary in a year before any deductions</span> <span class="hint"> ? </span></label>
+        <input type="text" id="income" name="income" placeholder="Enter gross annual income" onkeydown="checkfield(this.id,'gross','error1')"> <span id="error1">Please enter numbers only</span> <span class="error error1"> ! </span>
+        
+        <label for="extraIncome">Enter extra Income <span id="extra">Its a source of income other than primary source</span> <span class="hint extra"> ? </span></label>
+        <input type="text" id="extraIncome" name="extraIncome" placeholder="Enter extra income from other sources" onkeydown="checkfield(this.id,'extra','error2')"> <span id="error2">Please enter numbers only</span> <span class="error error2"> ! </span>
+       
+        <label for="age">Enter age group <span id="age1">Select age group based on your age</span> <span class="hint age"> ? </span></label>
+        <select id="age" name="age" onselect="selected()" > 
+            <option value=""></option>
+            <option value="40"><40</option>
+            <option value="41,59">>=40 & <60</option>
+            <option value="60">>=60</option>
+        </select> <span id="error3">Select an age group you belongs to...</span> <span class="error error3"> ! </span>
+       
+        <label for="deductions">Enter total applicable deductions <span id="ded">Deductions are the cuttings from overall income other than tax</span> <span class="hint ded"> ? </span></label>
+
+        <input type="text" id="deductions" name="deductions" placeholder="Add total applicable deductions" onkeydown="checkfield(this.id,'ded','error4')"> <span id="error4">Please enter numbers only</span> <span class="error error4"> ! </span>
+        <br>
+        <button type="button" onclick="submittax()">SUBMIT</button>
+    </form>
+
+    <div id="resultModal" class="modal active">
+        <div class="content">
+            <p class="bold">Your overall income will be <br> <span id="atax"></span> </p> <p class="small">after deductions</p>
+            <button class="button" onclick="closefield()">Close</button>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+    <script>
+
+        function closefield(){
+            var resultModal=document.getElementById("resultModal");
+            resultModal.classList.add("active");
+        }
+
+        var hint = document.querySelector('.hint');
+
+        // Get the gross element
+        var gross = document.getElementById('gross');
+
+        // Add event listener for mouseover
+        hint.addEventListener('mouseover', function() {
+            gross.style.top = '-14%';
+            gross.style.visibility="visible";
+            gross.style.opacity=1;
+
+        });
+
+        // Add event listener for mouseout
+        hint.addEventListener('mouseout', function() {
+            gross.style.top = '0';
+            gross.style.visibility="hidden";
+            gross.style.opacity=0;
+        });
+
+
+        var ehint = document.querySelector('.extra');
+
+        // Get the gross element
+        var extra = document.getElementById('extra');
+
+        // Add event listener for mouseover
+        ehint.addEventListener('mouseover', function() {
+            extra.style.top = '35px';
+            extra.style.visibility="visible";
+            extra.style.opacity=1;
+
+        });
+
+        // Add event listener for mouseout
+        ehint.addEventListener('mouseout', function() {
+            extra.style.top = '0';
+            extra.style.visibility="hidden";
+            extra.style.opacity=0;
+        });
+
+
+        var ahint = document.querySelector('.age');
+
+        // Get the gross element
+        var age = document.getElementById('age1');
+
+        // Add event listener for mouseover
+        ahint.addEventListener('mouseover', function() {
+            age.style.top = '125px';
+            age.style.visibility="visible";
+            age.style.opacity=1;
+
+        });
+
+        // Add event listener for mouseout
+        ahint.addEventListener('mouseout', function() {
+            age.style.top = '0';
+            age.style.visibility="hidden";
+            age.style.opacity=0;
+        });
+
+
+        var dhint = document.querySelector('.ded');
+
+        // Get the gross element
+        var ded = document.getElementById('ded');
+
+        // Add event listener for mouseover
+        dhint.addEventListener('mouseover', function() {
+            ded.style.top = '155px';
+            ded.style.visibility="visible";
+            ded.style.opacity=1;
+
+        });
+
+        // Add event listener for mouseout
+        dhint.addEventListener('mouseout', function() {
+            ded.style.top = '0';
+            ded.style.visibility="hidden";
+            ded.style.opacity=0;
+        });
+
+
+        //Error ones
+
+        var error = document.querySelector('.error');
+
+        // Get the gross element
+        var error1 = document.getElementById('error1');
+
+        // Add event listener for mouseover
+        error.addEventListener('mouseover', function() {
+            error1.style.top = '15px';
+            error1.style.visibility="visible";
+            error1.style.opacity=1;
+
+        });
+
+        // Add event listener for mouseout
+        error.addEventListener('mouseout', function() {
+            error1.style.top = '0';
+            error1.style.visibility="hidden";
+            error1.style.opacity=0;
+        });
+
+
+        
+        
+        var e2 = document.querySelector('.error2');
+
+        // Get the gross element
+        var error2 = document.getElementById('error2');
+
+        // Add event listener for mouseover
+        e2.addEventListener('mouseover', function() {
+            error2.style.top = '80px';
+            error2.style.visibility="visible";
+            error2.style.opacity=1;
+
+        });
+
+        // Add event listener for mouseout
+        e2.addEventListener('mouseout', function() {
+            error2.style.top = '0';
+            error2.style.visibility="hidden";
+            error2.style.opacity=0;
+        });
+
+
+
+        
+        var e3 = document.querySelector('.error3');
+
+        // Get the gross element
+        var error3 = document.getElementById('error3');
+
+        // Add event listener for mouseover
+        e3.addEventListener('mouseover', function() {
+            error3.style.top = '150px';
+            error3.style.visibility="visible";
+            error3.style.opacity=1;
+
+        });
+
+        // Add event listener for mouseout
+        e3.addEventListener('mouseout', function() {
+            error3.style.top = '0';
+            error3.style.visibility="hidden";
+            error3.style.opacity=0;
+        });
+
+
+        
+        var e4 = document.querySelector('.error4');
+
+        // Get the gross element
+        var error4 = document.getElementById('error4');
+
+        // Add event listener for mouseover
+        e4.addEventListener('mouseover', function() {
+            error4.style.top = '218px';
+            error4.style.visibility="visible";
+            error4.style.opacity=1;
+
+        });
+
+        // Add event listener for mouseout
+        e4.addEventListener('mouseout', function() {
+            error4.style.top = '0';
+            error4.style.visibility="hidden";
+            error4.style.opacity=0;
+        });
+    </script>
+</body>
+</html>
